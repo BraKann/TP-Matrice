@@ -209,9 +209,8 @@ void matrixMultiplyStrassen(double *S, double *A, double *B, uint64_t n){
     After the procedure, x contains the solution of Ax=b.
     We assume that x has been allocated outside the function.
 */
-void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n){
-
-    /* Votre code ici */
+void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
+{
     
 }
 
