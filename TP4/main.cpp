@@ -31,7 +31,8 @@ int main(int argc, char** argv){
     b[2] = 6;
 
     SolveTriangularSystemUP(x,a,b,3);
-    
+    writeMatrix(stdout,x,3,1);
+
     /*** Desallocation des matrices et des vecteurs pour Ax=b ***/
     freeMatrix(a);
     freeVector(b);

@@ -88,8 +88,8 @@ A sream can also be a file.
 */
 void writeMatrix(FILE *stream, double *A, uint64_t n, uint64_t m)
 {
-	fprintf(stream, "%d %d \n", (int)n, (int)m);
-	int i, j;
+	fprintf(stream, "%d %d \n", (uint64_t)n, (uint64_t)m);
+	uint64_t i, j;
 	for(i = 0; i < n; ++i)
 	{
 	      for(j = 0; j < m; ++j)
@@ -157,7 +157,7 @@ double getMaxInMatrix(double max, double *A, uint64_t n, uint64_t m)
 {
 	double maxA = fabs(A[0]);
 	double current = fabs(A[0]);
-	int i,j;
+	uint64_t i,j;
 	for(i = 0; i < n; ++i)
 	{
 		for(j = 0; j < m; ++j)
@@ -181,12 +181,12 @@ We assume that S has already been allocated outside the function.
 void matrixMultiplyNaive(double *S, double *A, double *B, uint64_t l_A, uint64_t lc_AB, uint64_t c_B)
 {
   //float sum = 0.0;
-  for (int i = 0; i < l_A ; i++)
+  for (uint64_t i = 0; i < l_A ; i++)
   {
-    for (int j = 0; j < c_B ; j++)
+    for (uint64_t j = 0; j < c_B ; j++)
     {
       float sum = 0.0;
-      for (int k = 0; k < lc_AB ; k++)
+      for (uint64_t k = 0; k < lc_AB ; k++)
       {
         sum = sum + ((A[i*lc_AB+k]) * (B[k*c_B+j]));
         S[i*c_B + j] = sum;
@@ -211,7 +211,32 @@ void matrixMultiplyStrassen(double *S, double *A, double *B, uint64_t n){
 */
 void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 {
+  
+  x[n] = b[n-1] / A[n-1];
+
+  double* Ap = allocateMatrix(n-1,n-1);
+  double* Bp = allocateVector(n);
+
+  Ap = redMat(A,n-1);
+
+  for (uint64_t i = 0; i < n; i++)
+  {
+    Bp[i] = b[i] - x[i] // * 
+  }
+
+}
+
+double* redMat(double* A, uint64_t n){
+  double *B = allocateMatrix(n,n);
+  for(uint16_t i = 0; i < n; i++){
+    for (uint64_t j = 0; j < n; j++)
+    {
+      B[i*n+j] = A[i*n+j];
+    }
     
+  }
+
+  return B;
 }
 
 /* 
