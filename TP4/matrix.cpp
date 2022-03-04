@@ -211,22 +211,23 @@ void matrixMultiplyStrassen(double *S, double *A, double *B, uint64_t n){
 */
 void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 {
-  
-  x[n] = b[n-1] / A[n-1];
-
-  double* Ap = allocateMatrix(n-1,n-1);
-  double* Bp = allocateVector(n);
-
-  Ap = redMat(A,n-1);
-
-  for (uint64_t i = 0; i < n; i++)
+  for (int i = n; i > 0; i--)
   {
-    Bp[i] = b[i] - x[i] // * 
-  }
+    x[i-1] = b[i-1];
+    for (int j = i; j <= n; j++)
 
+    {
+      x[i-1] = x[i-1] - A[(i-1)*n+j] * x[j];
+    }
+
+    x[i-1] = (1/A[(i-1)*n+i-1]) * x[i-1];
+  }
 }
 
-double* redMat(double* A, uint64_t n){
+
+/* 
+double* redMat(double* A, uint64_t n)
+{
   double *B = allocateMatrix(n,n);
   for(uint16_t i = 0; i < n; i++){
     for (uint64_t j = 0; j < n; j++)
@@ -238,6 +239,7 @@ double* redMat(double* A, uint64_t n){
 
   return B;
 }
+*/
 
 /* 
     Performs Gauss elimination for given a matrix A (size n x n) and a vector b (size n).
