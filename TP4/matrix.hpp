@@ -1,3 +1,8 @@
+/*
+*ALGO. NUM. - TP 4 - MATRICES 
+*ALISA HASANLI & CHIABERGE CHRISTOPHER - GR.485 - 2021/2022
+*/
+
 #include <math.h>
 #include <limits.h>
 #include <stdlib.h>

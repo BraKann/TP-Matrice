@@ -1,4 +1,10 @@
+/*
+*ALGO. NUM. - TP 4 - MATRICES 
+*ALISA HASANLI & CHIABERGE CHRISTOPHER - GR.485 - 2021/2022
+*/
+
 #include "matrix.hpp"
+using namespace std;
 
 /*
   Supposons, nous avons une matrice de taille n x m. 
@@ -9,7 +15,7 @@
   Par exemple, notre matrixe A de taille n x m est stockée comme:
         tabA = [A_0,0   A_0,1  ...  A_0,m-1   A_10, ... A_1,m-1,  ... ,  A_0,n-1  ..., A_n-1,m-1]
 
-    Par conséquant, un élement A_ij aurait quelle indice dans le tableau tabA ? 
+    Par conséquant, un élement A_ij aurait quelle indice dans le tableau tabA ? i * 
 
  */
 
@@ -21,14 +27,12 @@ double *allocateMatrix(uint64_t n,uint64_t m) {
 }
 
 
-/* Frees the memory allocated to matrix A
-*/
+/* Frees the memory allocated to matrix A*/
 void freeMatrix(double *A) {
     free(A);
 }
 
-/* Allocates a n sized vector and initializes all entries to 0 
-*/
+/* Allocates a n sized vector and initializes all entries to 0 */
 double *allocateVector(uint64_t n) {
   double *v; 
   v = (double *) calloc(n, sizeof(double));
@@ -102,7 +106,7 @@ void writeMatrix(FILE *stream, double *A, uint64_t n, uint64_t m)
 
 
 
-//The function computes the element-by-element abs of matrix A
+/*The function computes the element-by-element abs of matrix A*/
 void absMatrix(double *Aabs,double *A, uint64_t n, uint64_t m)
 {
 	uint64_t i,j;
@@ -180,7 +184,7 @@ We assume that S has already been allocated outside the function.
 */
 void matrixMultiplyNaive(double *S, double *A, double *B, uint64_t l_A, uint64_t lc_AB, uint64_t c_B)
 {
-  //float sum = 0.0;
+  float sum = 0.0;
   for (int i = 0; i < l_A ; i++)
   {
     for (int j = 0; j < c_B ; j++)
@@ -209,10 +213,71 @@ void matrixMultiplyStrassen(double *S, double *A, double *B, uint64_t n){
     After the procedure, x contains the solution of Ax=b.
     We assume that x has been allocated outside the function.
 */
-void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n){
+void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
+{
 
-    /* Votre code ici */
+  /* PASSER EN ITERATIF
+  if (n == 1)
+  {
+
+    x[0] = b[0] / A[0];
+  }
+  else
+  {
+
+    double xn;
+    double *Ap = allocateMatrix(n, n);
+    double *Bp = allocateVector(n);
+    double *C = allocateVector(n);
+
+    for (uint64_t j = 0; j < n; j++)
+    {
+      C[j] = A[getMatrixIndex(n, j, n - 1)];
+    }
+
+    xn = b[n - 1] / A[getMatrixIndex(n, n - 1, n - 1)];
+
+    for (uint64_t red_i = 0; red_i < n - 1; red_i++)
+    {
+      for (uint64_t red_j = 0; red_j < n - 1; red_j++)
+      {
+        Ap[getMatrixIndex(n - 1, red_i, red_j)] = A[getMatrixIndex(n, red_i, red_j)];
+      }
+    }
+
+    for (uint64_t i = 0; i < n; i++)
+    {
+      Bp[i] = b[i] - (xn * C[i]);
+    }
+    x[n - 1] = xn;
+
+    SolveTriangularSystemUP(x, Ap, Bp, n - 1);
+  }
+  */
+  double* bp = allocateVector(n);
+
+  for (int i=0; i < n; ++i)
+  {
+    double somme = 0;
     
+    for (int k = 0; k < i; ++k)
+    {
+      somme += A[i*n+k] * bp[k];
+    }
+
+    bp[i] = (b[i] - somme) / A[i*n+i];
+  }
+
+  for (int i = n - 1; i >= 0; --i)
+  {
+    double somme2 = 0;
+    for (int k = i+1; k < n; ++k)
+    {
+      somme2 += A[i*n+k] * x[k];
+    }
+    x[i] = bp[i] / A[n*(n-1)+(n-1)];
+  }
+
 }
 
 /* 
@@ -224,8 +289,17 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n){
         *  false in case of failure, for example matrix is impossible to triangularize. 
 */
 bool Triangularize(double *A, double *b, uint64_t n){
-    
-    /* Votre code ici */
+
+    int j,i;
+
+    for(i = 0; i < n-1; i++) {
+      if( (A[i,i] = 0) && (i < n) ) {
+        int j = i + 1;
+      }
+      while( (A[j,i] = 0) && (j < n-1) ){
+        j = j + 1;
+      }
+    }
 
     return false;
 }
@@ -240,9 +314,17 @@ bool Triangularize(double *A, double *b, uint64_t n){
         *  false in case of failure, for example matrix is of rank <n .
 */
 bool SolveSystemGauss(double *x, double *A, double *b, uint64_t n){
-    
-    /* Votre code ici */
 
+  bool isTriangularize = true;
+  isTriangularize = Triangularize(A,b,n);
+
+  if(!isTriangularize) 
+  {
     return false;
+  } else {
+    SolveTriangularSystemUP(x,A,b,n);
+  }
+  
+  return true;
 }
 
