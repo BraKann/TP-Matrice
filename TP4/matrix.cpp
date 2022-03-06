@@ -226,22 +226,6 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 
 
 /* 
-double* redMat(double* A, uint64_t n)
-{
-  double *B = allocateMatrix(n,n);
-  for(uint16_t i = 0; i < n; i++){
-    for (uint64_t j = 0; j < n; j++)
-    {
-      B[i*n+j] = A[i*n+j];
-    }
-    
-  }
-
-  return B;
-}
-*/
-
-/* 
     Performs Gauss elimination for given a matrix A (size n x n) and a vector b (size n).
     Modifies directly matrix A and vector b.
     In the end of the procedure, A is upper truangular and b is modified accordingly.
