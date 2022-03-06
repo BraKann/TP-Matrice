@@ -4,6 +4,7 @@
 */
 
 #include "matrix.hpp"
+#include <iostream>
 using namespace std;
 
 /*
@@ -237,20 +238,53 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
         *  true in case of success and 
         *  false in case of failure, for example matrix is impossible to triangularize. 
 */
-bool Triangularize(double *A, double *b, uint64_t n){
-
-    int j,i;
-
-    for(i = 0; i < n-1; i++) {
-      if( (A[i,i] = 0) && (i < n) ) {
-        int j = i + 1;
-      }
-      while( (A[j,i] = 0) && (j < n-1) ){
+bool Triangularize(double *A, double *b, uint64_t n)
+{
+  int j;
+  double* T = allocateVector(n);
+  for( int i = 0; i < n - 1; i++)
+  {
+    if (A[i*n+i] == 0 & i < n)
+    {
+       j = i + 1;
+      while (A[j*n+i] = 0 & j < n -1)
+      {
         j = j + 1;
       }
     }
 
-    return false;
+    if ((j = n - 1) & (A[j*n+i] == 0))
+    {
+      string mess = "pas de solution";
+    } else {
+      T[i] = A[i * n + i];
+      A[i*n+i] = A[j*n+i];
+      A[j*n+i] = T[i];
+
+      int x = b[i];
+      b[i] = b[j];
+      b[j] = x;
+    }
+
+    for ( j = i + 1; j < n-1; j++)
+    {
+      b[j] = b[j] - (A[j*n+i] / A[i*n+1]) * b[i];
+      A[j*n+i] = A[j*n+i] - (A[j*n+i] / A[i*n+1]) * A[i*n+i];
+    }
+  }
+
+  for (i = 1; i < n; i++)
+	for (j = 0; j < i; j++)
+		if (mat[i][j] != 0)
+			flag = 0;
+		else
+			flag = 1;
+
+	if (flag == 1)
+		cout << “Upper Triangular Matrix”;
+	else
+		cout << “Not an Upper Triangular Matrix”;
+	return 0;
 }
 
 /*
