@@ -92,8 +92,8 @@ A sream can also be a file.
 */
 void writeMatrix(FILE *stream, double *A, uint64_t n, uint64_t m)
 {
-	fprintf(stream, "%d %d \n", (int)n, (int)m);
-	int i, j;
+	fprintf(stream, "%d %d \n", (uint64_t)n, (uint64_t)m);
+	uint64_t i, j;
 	for(i = 0; i < n; ++i)
 	{
 	      for(j = 0; j < m; ++j)
@@ -161,7 +161,7 @@ double getMaxInMatrix(double max, double *A, uint64_t n, uint64_t m)
 {
 	double maxA = fabs(A[0]);
 	double current = fabs(A[0]);
-	int i,j;
+	uint64_t i,j;
 	for(i = 0; i < n; ++i)
 	{
 		for(j = 0; j < m; ++j)
@@ -184,13 +184,13 @@ We assume that S has already been allocated outside the function.
 */
 void matrixMultiplyNaive(double *S, double *A, double *B, uint64_t l_A, uint64_t lc_AB, uint64_t c_B)
 {
-  float sum = 0.0;
-  for (int i = 0; i < l_A ; i++)
+  
+  for (uint64_t i = 0; i < l_A ; i++)
   {
-    for (int j = 0; j < c_B ; j++)
+    for (uint64_t j = 0; j < c_B ; j++)
     {
       float sum = 0.0;
-      for (int k = 0; k < lc_AB ; k++)
+      for (uint64_t k = 0; k < lc_AB ; k++)
       {
         sum = sum + ((A[i*lc_AB+k]) * (B[k*c_B+j]));
         S[i*c_B + j] = sum;
@@ -215,70 +215,19 @@ void matrixMultiplyStrassen(double *S, double *A, double *B, uint64_t n){
 */
 void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 {
-
-  /* PASSER EN ITERATIF
-  if (n == 1)
+  for (int i = n; i > 0; i--)
   {
+    x[i-1] = b[i-1];
+    for (int j = i; j <= n; j++)
 
-    x[0] = b[0] / A[0];
+    {
+      x[i-1] = x[i-1] - A[(i-1)*n+j] * x[j];
+    }
+
+    x[i-1] = (1/A[(i-1)*n+i-1]) * x[i-1];
   }
-  else
-  {
-
-    double xn;
-    double *Ap = allocateMatrix(n, n);
-    double *Bp = allocateVector(n);
-    double *C = allocateVector(n);
-
-    for (uint64_t j = 0; j < n; j++)
-    {
-      C[j] = A[getMatrixIndex(n, j, n - 1)];
-    }
-
-    xn = b[n - 1] / A[getMatrixIndex(n, n - 1, n - 1)];
-
-    for (uint64_t red_i = 0; red_i < n - 1; red_i++)
-    {
-      for (uint64_t red_j = 0; red_j < n - 1; red_j++)
-      {
-        Ap[getMatrixIndex(n - 1, red_i, red_j)] = A[getMatrixIndex(n, red_i, red_j)];
-      }
-    }
-
-    for (uint64_t i = 0; i < n; i++)
-    {
-      Bp[i] = b[i] - (xn * C[i]);
-    }
-    x[n - 1] = xn;
-
-    SolveTriangularSystemUP(x, Ap, Bp, n - 1);
-  }
-  */
-  double* bp = allocateVector(n);
-
-  for (int i=0; i < n; ++i)
-  {
-    double somme = 0;
-    
-    for (int k = 0; k < i; ++k)
-    {
-      somme += A[i*n+k] * bp[k];
-    }
-
-    bp[i] = (b[i] - somme) / A[i*n+i];
-  }
-
-  for (int i = n - 1; i >= 0; --i)
-  {
-    double somme2 = 0;
-    for (int k = i+1; k < n; ++k)
-    {
-      somme2 += A[i*n+k] * x[k];
-    }
-    x[i] = bp[i] / A[n*(n-1)+(n-1)];
-  }
-
 }
+
 
 /* 
     Performs Gauss elimination for given a matrix A (size n x n) and a vector b (size n).

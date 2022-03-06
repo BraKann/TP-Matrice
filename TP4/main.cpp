@@ -15,14 +15,35 @@ using namespace std;
 
 int main(int argc, char** argv){
 
+
     /***Allocation des matrices***/
     double* A = allocateMatrix(2,3);
     double* B = allocateMatrix(3,2);
     double* C = allocateMatrix(4,2);
     double* D = allocateMatrix(2,2);
-    double* E = allocateMatrix(3,3);
-    double* F = allocateMatrix(4,4);
-    double* G = allocateMatrix(5,5);
+
+    /*** Allocation des matrices et des vecteur pour Ax=b ***/
+    double* a = allocateMatrix(3,3);
+    double* b = allocateVector(3);
+    double* x = allocateVector(3);
+
+    a[0] = 3; a[1] = 1; a[2] = -5;
+    a[3] = 0; a[4] = -2; a[5] = 4;
+    a[6] = 0; a[7] = 0; a[8] = 2;
+
+    b[0] = 1;
+    b[1] = 10;
+    b[2] = 6;
+
+    SolveTriangularSystemUP(x,a,b,3);
+    writeMatrix(stdout,x,3,1);
+
+    /*** Desallocation des matrices et des vecteurs pour Ax=b ***/
+    freeMatrix(a);
+    freeVector(b);
+    freeVector(x);
+
+    
 
     /***Allocation des vecteurs***/
     double* V1 = allocateVector(4);
@@ -36,12 +57,18 @@ int main(int argc, char** argv){
     B[4] = 5 ; B[5] = 6 ;
 
     /***Multiplication naive entre les matrices A et B***/
-    matrixMultiplyNaive(D,A,B,2,3,2);
+    //matrixMultiplyNaive(D,A,B,2,3,2);
+
     /***Ecriture de la matrice D***/
+<<<<<<< HEAD
     writeMatrix(stdout, D, 2, 2);
+=======
+    //writeMatrix(stdout, D, 2, 2);
+
+>>>>>>> 8c5248e60764aaca6b385448dea4c8687f9c1d7d
     /***Addition entre les matrices A et B***/
-    matrixAdd(C, A, B, 2, 3);
-    writeMatrix(stdout, C, 2, 3);
+    //matrixAdd(C, A, B, 2, 3);
+    //writeMatrix(stdout, C, 2, 3);
     
 
     cout << "Do or do not. There is no try." << endl;
@@ -92,12 +119,11 @@ int main(int argc, char** argv){
     freeMatrix(B);
     freeMatrix(C);
     freeMatrix(D);
-    freeMatrix(E);
-    freeMatrix(F);
-    freeMatrix(G);
     
     /***Desallocation des vecteurs***/
     freeVector(V1);
+
+    
     
     return 0;
 }

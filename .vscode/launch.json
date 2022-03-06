@@ -9,12 +9,21 @@
         ""
       ],
       "stopAtEntry": false,
+<<<<<<< HEAD
       "cwd": "c:/Users/Chris/Documents/Cours/L2/Semestre2/CRAN/TP-Matrice/TP4",
       "environment": [],
       "program": "c:/Users/Chris/Documents/Cours/L2/Semestre2/CRAN/TP-Matrice/TP4/build/Debug/outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "C:/msys64/mingw64/bin/gdb.exe",
+=======
+      "cwd": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/TP-Matrice/TP4",
+      "environment": [],
+      "program": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/TP-Matrice/TP4/build/Debug/outDebug",
+      "internalConsoleOptions": "openOnSessionStart",
+      "MIMode": "gdb",
+      "miDebuggerPath": "gdb",
+>>>>>>> 8c5248e60764aaca6b385448dea4c8687f9c1d7d
       "externalConsole": false,
       "setupCommands": [
         {
