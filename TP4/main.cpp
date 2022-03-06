@@ -60,12 +60,8 @@ int main(int argc, char** argv){
     //matrixMultiplyNaive(D,A,B,2,3,2);
 
     /***Ecriture de la matrice D***/
-<<<<<<< HEAD
-    writeMatrix(stdout, D, 2, 2);
-=======
     //writeMatrix(stdout, D, 2, 2);
 
->>>>>>> 8c5248e60764aaca6b385448dea4c8687f9c1d7d
     /***Addition entre les matrices A et B***/
     //matrixAdd(C, A, B, 2, 3);
     //writeMatrix(stdout, C, 2, 3);
