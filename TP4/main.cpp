@@ -15,12 +15,57 @@ using namespace std;
 
 int main(int argc, char** argv){
 
+/*
+int isUpperMatrix() 
+{
+    for (i = 1; i < n; i++)
+    {
+      for (j = 0; j < i; j++)
+      {
+        if (mat[i][j] != 0)
+        {
+          flag = 0;
+        }else{
+          flag = 1;
+        }
+      }
+    }
+    if (flag == 1)
+    {
+      cout << "Upper Triangular Matrix"<<endl;
+    }else{
+      cout << "Not an Upper Triangular Matrix"<<endl;
+    }
+    return 0;
+}
+*/
+
+
 
     /***Allocation des matrices***/
     double* A = allocateMatrix(2,3);
     double* B = allocateMatrix(3,2);
     double* C = allocateMatrix(4,2);
     double* D = allocateMatrix(2,2);
+
+     /*** Allocations des matrices pour tester la triangularizations ***/
+     double* Aa = allocateMatrix(3,3);
+     double* Bb = allocateVector(3);
+    Aa[0] = 1; Aa[1] = -3; Aa[2] = 2;
+    Aa[3] = 2; Aa[4] = 1; Aa[5] = 1;
+    Aa[6] = 3; Aa[7] = -1; Aa[8] = 5;
+
+    Bb[0] = 1;
+    Bb[1] = -2;
+    Bb[2] = 3;
+
+    Triangularize(Aa,Bb,3);
+
+    writeMatrix(stdout,Aa,3,3);
+    writeMatrix(stdout,Bb,3,1);
+
+    freeMatrix(Aa);
+    freeVector(Bb);
 
     /*** Allocation des matrices et des vecteur pour Ax=b ***/
     double* a = allocateMatrix(3,3);
@@ -35,8 +80,8 @@ int main(int argc, char** argv){
     b[1] = 10;
     b[2] = 6;
 
-    SolveTriangularSystemUP(x,a,b,3);
-    writeMatrix(stdout,x,3,1);
+    //SolveTriangularSystemUP(x,a,b,3);
+    //writeMatrix(stdout,x,3,1);
 
     /*** Desallocation des matrices et des vecteurs pour Ax=b ***/
     freeMatrix(a);
@@ -94,22 +139,22 @@ int main(int argc, char** argv){
     TS[14] = 0;
     TS[15] = 6;
 
-    SolveTriangularSystemUP(x, TS, b, 4);
+    //SolveTriangularSystemUP(x, TS, b, 4);
 
-    cout << "TS =" << endl;
-    writeMatrix(stdout, TS, 4, 4);
+    //cout << "TS =" << endl;
+    //writeMatrix(stdout, TS, 4, 4);
 
-    cout << "b = " << b[0] << endl
-         << "    " << b[1] << endl
-         << "    " << b[2] << endl
-         << "    " << b[3] << endl;
+    //cout << "b = " << b[0] << endl
+     //    << "    " << b[1] << endl
+     //    << "    " << b[2] << endl
+     //    << "    " << b[3] << endl;
 
-    cout << "x.B = b" << endl;
+    //cout << "x.B = b" << endl;
     
-    cout << "x = " << x[0] << endl
-         << "    " << x[1] << endl
-         << "    " << x[2] << endl
-         << "    " << x[3] << endl;
+    //cout << "x = " << x[0] << endl
+      //   << "    " << x[1] << endl
+      //   << "    " << x[2] << endl
+      //   << "    " << x[3] << endl;
             /***Desallocation des matrices***/
     freeMatrix(A);
     freeMatrix(B);

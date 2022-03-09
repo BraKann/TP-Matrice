@@ -242,6 +242,7 @@ bool Triangularize(double *A, double *b, uint64_t n)
 {
   int j;
   double* T = allocateVector(n);
+
   for( int i = 0; i < n - 1; i++)
   {
     if (A[i*n+i] == 0 & i < n)
@@ -255,7 +256,8 @@ bool Triangularize(double *A, double *b, uint64_t n)
 
     if ((j = n - 1) & (A[j*n+i] == 0))
     {
-      string mess = "pas de solution";
+      //string mess = "pas de solution";
+      return false;
     } else {
       T[i] = A[i * n + i];
       A[i*n+i] = A[j*n+i];
@@ -264,6 +266,8 @@ bool Triangularize(double *A, double *b, uint64_t n)
       int x = b[i];
       b[i] = b[j];
       b[j] = x;
+
+      return true;
     }
 
     for ( j = i + 1; j < n-1; j++)
@@ -273,18 +277,6 @@ bool Triangularize(double *A, double *b, uint64_t n)
     }
   }
 
-  for (i = 1; i < n; i++)
-	for (j = 0; j < i; j++)
-		if (mat[i][j] != 0)
-			flag = 0;
-		else
-			flag = 1;
-
-	if (flag == 1)
-		cout << “Upper Triangular Matrix”;
-	else
-		cout << “Not an Upper Triangular Matrix”;
-	return 0;
 }
 
 /*
