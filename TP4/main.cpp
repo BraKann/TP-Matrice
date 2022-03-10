@@ -39,18 +39,15 @@ int isUpperMatrix()
     return 0;
 }
 */
-
-
-
     /***Allocation des matrices***/
     double* A = allocateMatrix(2,3);
     double* B = allocateMatrix(3,2);
     double* C = allocateMatrix(4,2);
     double* D = allocateMatrix(2,2);
 
-     /*** Allocations des matrices pour tester la triangularizations ***/
-     double* Aa = allocateMatrix(3,3);
-     double* Bb = allocateVector(3);
+    /*** Allocations des matrices pour tester la triangularizations ***/
+    double* Aa = allocateMatrix(3,3);
+    double* Bb = allocateVector(3);
     Aa[0] = 1; Aa[1] = -3; Aa[2] = 2;
     Aa[3] = 2; Aa[4] = 1; Aa[5] = 1;
     Aa[6] = 3; Aa[7] = -1; Aa[8] = 5;
@@ -62,10 +59,11 @@ int isUpperMatrix()
     Triangularize(Aa,Bb,3);
 
     writeMatrix(stdout,Aa,3,3);
-    writeMatrix(stdout,Bb,3,1);
 
     freeMatrix(Aa);
     freeVector(Bb);
+
+    //------------------------------------------------------------------
 
     /*** Allocation des matrices et des vecteur pour Ax=b ***/
     double* a = allocateMatrix(3,3);
@@ -88,10 +86,8 @@ int isUpperMatrix()
     freeVector(b);
     freeVector(x);
 
-    
+    //-------------------------------------------------------------
 
-    /***Allocation des vecteurs***/
-    double* V1 = allocateVector(4);
     
     /***Construction de la matrice A***/
     A[0] = 1 ; A[1] = 2 ; A[2] = 3 ;
@@ -114,13 +110,17 @@ int isUpperMatrix()
 
     cout << "Do or do not. There is no try." << endl;
 
+    /*
     double *b = allocateVector(4);
-    double *x = allocateVector(4);
+    //double *x = allocateVector(4);
     b[0] = 3;
     b[1] = 2;
     b[2] = 3;
     b[3] = 3;
 
+    */
+
+  /*
     double *TS = allocateMatrix(4, 4);
     TS[0] = 10;
     TS[1] = 7;
@@ -138,6 +138,8 @@ int isUpperMatrix()
     TS[13] = 0;
     TS[14] = 0;
     TS[15] = 6;
+
+    */
 
     //SolveTriangularSystemUP(x, TS, b, 4);
 
@@ -160,9 +162,6 @@ int isUpperMatrix()
     freeMatrix(B);
     freeMatrix(C);
     freeMatrix(D);
-    
-    /***Desallocation des vecteurs***/
-    freeVector(V1);
 
     
     

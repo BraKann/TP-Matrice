@@ -238,44 +238,23 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
         *  true in case of success and 
         *  false in case of failure, for example matrix is impossible to triangularize. 
 */
+
 bool Triangularize(double *A, double *b, uint64_t n)
 {
-  int j;
-  double* T = allocateVector(n);
-
-  for( int i = 0; i < n - 1; i++)
+  double* m = allocateMatrix(n,n);
+  for (int j = 0; j <= n; j++)
   {
-    if (A[i*n+i] == 0 & i < n)
+    for (int i = j; i < n; i++)
     {
-       j = i + 1;
-      while (A[j*n+i] = 0 & j < n -1)
+      m[i*n+j] = A[i*n+j] / A[j*n+j];
+      for (int k = j; k < n; k++)
       {
-        j = j + 1;
+        A[i*n+k] = A[i*n+k] - (m[i*n+j] * A[j*n+k] ) ;
       }
-    }
-
-    if ((j = n - 1) & (A[j*n+i] == 0))
-    {
-      //string mess = "pas de solution";
-      return false;
-    } else {
-      T[i] = A[i * n + i];
-      A[i*n+i] = A[j*n+i];
-      A[j*n+i] = T[i];
-
-      int x = b[i];
-      b[i] = b[j];
-      b[j] = x;
-
-      return true;
-    }
-
-    for ( j = i + 1; j < n-1; j++)
-    {
-      b[j] = b[j] - (A[j*n+i] / A[i*n+1]) * b[i];
-      A[j*n+i] = A[j*n+i] - (A[j*n+i] / A[i*n+1]) * A[i*n+i];
+      b[i] = b[i] - (m[i*n+j] * b[j]);
     }
   }
+  freeMatrix(m);
 
 }
 
