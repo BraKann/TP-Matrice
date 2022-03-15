@@ -13,32 +13,9 @@
 
 using namespace std;
 
-int main(int argc, char** argv){
-
-/*
-int isUpperMatrix() 
+int main(int argc, char** argv)
 {
-    for (i = 1; i < n; i++)
-    {
-      for (j = 0; j < i; j++)
-      {
-        if (mat[i][j] != 0)
-        {
-          flag = 0;
-        }else{
-          flag = 1;
-        }
-      }
-    }
-    if (flag == 1)
-    {
-      cout << "Upper Triangular Matrix"<<endl;
-    }else{
-      cout << "Not an Upper Triangular Matrix"<<endl;
-    }
-    return 0;
-}
-*/
+
     /***Allocation des matrices***/
     double* A = allocateMatrix(2,3);
     double* B = allocateMatrix(3,2);

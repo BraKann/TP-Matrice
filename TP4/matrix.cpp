@@ -241,13 +241,79 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 
 bool Triangularize(double *A, double *b, uint64_t n)
 {
-  double* m = allocateMatrix(n,n);
-  for (int j = 0; j <= n; j++)
+  // Ici j'ai essayé de faire l'elemination de gauss que j'avais vu dans un forum
+	for(int i=0;i<n;i++)
   {
-    for (int i = j; i < n; i++)
+		  if(A[i*n+i] == 0.0)
+		  {
+			   cout<<"Mathematical Error!";
+			   exit(0);
+		  }
+		  for(int j=i;j<n+1;j++)
+		  {
+			   int ratio = A[j*n+i]/A[i*n+i];
+
+			   for(int k=0;k<n;k++)
+			   {
+			  		A[j*n+k] = A[j*n+k] - ratio*A[i*n+k];
+			   }
+		  }
+	 }
+
+//------------------------------------------------------------------------------------------------------------------------------------------
+  /* Ici j'etais en train de faire un decompoisition LU et recuperer la matrice U qui est un upper matrice
+  double* l = allocateMatrix(n,n);
+  double* u = allocateMatrix(n,n);
+  int i = 0, j = 0, k = 0;
+
+  for (i = 0; i < n; i++)
+  {
+    for (j = 0; j < n; j++)
+    {
+      if (j < i)
+      {
+        l[j*n+i] = 0;
+      } else {
+        l[j*n+i] = A[j*n+i];
+        for (k = 0; k < i; k++)
+        {
+          l[j*n+i] = l[j*n+i] - (l[j*n+k] * u[k*n+i]);
+        }
+      }
+    }
+
+    for (j = 0; j < n; j++) 
+    {
+      if (j < i) 
+      {
+        u[i*n+j] = 0;
+      }else if (j == i) 
+      {
+         u[i*n+j] = 1;
+      } else {
+         u[i*n+j] = A[i*n+j] / l[i*n+i];
+         for (k = 0; k < i; k++) 
+         {
+           u[i*n+j] = u[i*n+j] - ((l[i*n+k] * u[k*n+j]) / l[i*n+i]);
+         }
+      }
+    }
+
+  }
+
+  copyMatrix(A,u,n,n);
+
+  */
+//--------------------------------------------------------------------------------------
+  /* Ca je sais plus ce que c'est 
+  double* m = allocateMatrix(n,n);
+  for (int j = 0; j < n ; j++)
+  {
+    for (int i = j + 1; i < n-1; i++)
     {
       m[i*n+j] = A[i*n+j] / A[j*n+j];
-      for (int k = j; k < n; k++)
+
+      for (int k = j+1; k < n-1; k++)
       {
         A[i*n+k] = A[i*n+k] - (m[i*n+j] * A[j*n+k] ) ;
       }
@@ -255,7 +321,8 @@ bool Triangularize(double *A, double *b, uint64_t n)
     }
   }
   freeMatrix(m);
-
+  */
+//----------------------------------------------------------------------------------------
 }
 
 /*

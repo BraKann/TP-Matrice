@@ -64,8 +64,3 @@ bool       Triangularize            (double *A, double *b, uint64_t n);
         *  false in case of failure, for example matrix is of rank <n .
 */
 bool        SolveSystemGauss        (double *x, double *A, double *b, uint64_t n);
-
-void RSLGauss (double* A, double* b);
-double searchPivot (double* A, double j);
-void permutationLignes(double* A, double* b, double j, double k);
-void combinerLigners(double* A, double* b, double j, double k, double a);
