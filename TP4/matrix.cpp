@@ -242,23 +242,23 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 bool Triangularize(double *A, double *b, uint64_t n)
 {
   // Ici j'ai essayé de faire l'elemination de gauss que j'avais vu dans un forum
-	for(int i=0;i<n;i++)
+for(int i=0;i<n;i++)
   {
-		  if(A[i*n+i] == 0.0)
-		  {
-			   cout<<"Mathematical Error!";
-			   exit(0);
-		  }
-		  for(int j=i;j<n+1;j++)
-		  {
-			   int ratio = A[j*n+i]/A[i*n+i];
+          if(A[i*n+i] == 0.0)
+          {
+               cout<<"Mathematical Error!";
+               exit(0);
+          }
+          for(int j=i+1;j<n;j++)
+          {
+               int ratio = A[j*n+i]/A[i*n+i];
 
-			   for(int k=0;k<n;k++)
-			   {
-			  		A[j*n+k] = A[j*n+k] - ratio*A[i*n+k];
-			   }
-		  }
-	 }
+               for(int k=i;k<n;k++)
+               {
+                      A[j*n+k] = A[j*n+k] - ratio*A[i*n+k];
+               }
+          }
+     }
 
 //------------------------------------------------------------------------------------------------------------------------------------------
   /* Ici j'etais en train de faire un decompoisition LU et recuperer la matrice U qui est un upper matrice

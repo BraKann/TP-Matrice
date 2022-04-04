@@ -23,19 +23,21 @@ int main(int argc, char** argv)
     double* D = allocateMatrix(2,2);
 
     /*** Allocations des matrices pour tester la triangularizations ***/
-    double* Aa = allocateMatrix(3,3);
-    double* Bb = allocateVector(3);
-    Aa[0] = 1; Aa[1] = -3; Aa[2] = 2;
-    Aa[3] = 2; Aa[4] = 1; Aa[5] = 1;
-    Aa[6] = 3; Aa[7] = -1; Aa[8] = 5;
+    double* Aa = allocateMatrix(4,4);
+    double* Bb = allocateVector(4);
+    Aa[0] = 10; Aa[1] = 7; Aa[2] = 8; Aa[3] = 7;
+    Aa[4] = 7; Aa[5] = 5; Aa[6] = 6; Aa[7] = 5;
+    Aa[8] = 8; Aa[9] = 6; Aa[10] = 10; Aa[11] = 9;
+    Aa[12] = 7; Aa[13] = 5; Aa[14] = 9; Aa[15] = 10;
 
-    Bb[0] = 1;
-    Bb[1] = -2;
-    Bb[2] = 3;
+    Bb[0] = 32;
+    Bb[1] = 23;
+    Bb[2] = 33;
+    Bb[3] = 31;
 
-    Triangularize(Aa,Bb,3);
+    Triangularize(Aa,Bb,4);
 
-    writeMatrix(stdout,Aa,3,3);
+    writeMatrix(stdout,Aa,4,4);
 
     freeMatrix(Aa);
     freeVector(Bb);
