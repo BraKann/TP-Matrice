@@ -41,11 +41,15 @@ int main(int argc, char** argv)
 
     matrixMultiplyNaive(S,A,B,n,m,n);
 
+    writeMatrix(stdout,S,n,m);
+
     SolveTriangularSystemUP(x,A,B,n);
 
-    Triangularize(A,B,n);
+    writeMatrix(stdout,x,4,1);
 
-    SolveSystemGauss(x,A,B,n);
+    //Triangularize(A,B,n);
+
+    //SolveSystemGauss(x,A,B,n);
 
     freeMatrix(A);
     freeMatrix(S);
