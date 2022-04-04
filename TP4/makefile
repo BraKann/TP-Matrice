@@ -1,18 +1,19 @@
 # Modèle de fichier Makefile, à adapter pour le TP
-# Faire une copie de ce fichier, changer le nom pour "makefile" et l'adapter pour votre projet
+# Faire une copie de ce fichier, changer le nom pour "makefile" (sans extension .txt!!!) et l'adapter pour votre projet
 # >cp makefile_model.txt makefile
 # 
 # Maintenant pour compiler il suffit d'écrire 
 # >make
 
+
 # options de compilation
-CC = g++
-CCFLAGS = -Wall -std=c++11
-LIBS = -lm -lstdc++	# par exemple, -lm rajoute le libm standard
+CC = gcc
+CCFLAGS = -Wall
+LIBS = 				# par exemple, -lm rajoute le libm standard
 LIBSDIR = 
 
 # fichiers du projet
-SRC = matrix.cpp main.cpp
+SRC = main.cpp matrix.cpp
 OBJ = $(SRC:.c=.o)
 EXEC = run.out
 
@@ -21,9 +22,8 @@ EXEC = run.out
 all: $(EXEC)
 
 # dépendance des .h
-main.o: matrix.hpp
-matrix.o: matrix.hpp
-
+fich1.o: matrix.hpp
+fich2.o: fich2.h fich1.h
 # règles de compilation
 %.o: %.c
 	$(CC) $(CCFLAGS) -o $@ -c $<

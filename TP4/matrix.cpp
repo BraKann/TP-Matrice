@@ -93,7 +93,7 @@ A sream can also be a file.
 */
 void writeMatrix(FILE *stream, double *A, uint64_t n, uint64_t m)
 {
-	fprintf(stream, "%d %d \n", (uint64_t)n, (uint64_t)m);
+	fprintf(stream, "%d %d \n", (int)n, (int)m);
 	uint64_t i, j;
 	for(i = 0; i < n; ++i)
 	{
@@ -219,7 +219,7 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
   for (int i = n; i > 0; i--)
   {
     x[i-1] = b[i-1];
-    for (int j = i; j <= n; j++)
+    for (uint64_t j = i; j <= n; j++)
 
     {
       x[i-1] = x[i-1] - A[(i-1)*n+j] * x[j];
@@ -241,88 +241,64 @@ void SolveTriangularSystemUP(double *x, double *A, double *b, uint64_t n)
 
 bool Triangularize(double *A, double *b, uint64_t n)
 {
-  // Ici j'ai essayé de faire l'elemination de gauss que j'avais vu dans un forum
-for(int i=0;i<n;i++)
+  uint64_t j,x;
+  double* T = allocateVector(n);
+  for (uint64_t i = 0; i < n ; i++)
   {
-          if(A[i*n+i] == 0.0)
-          {
-               cout<<"Mathematical Error!";
-               exit(0);
-          }
-          for(int j=i+1;j<n;j++)
-          {
-               int ratio = A[j*n+i]/A[i*n+i];
-
-               for(int k=i;k<n;k++)
-               {
-                      A[j*n+k] = A[j*n+k] - ratio*A[i*n+k];
-               }
-          }
-     }
-
-//------------------------------------------------------------------------------------------------------------------------------------------
-  /* Ici j'etais en train de faire un decompoisition LU et recuperer la matrice U qui est un upper matrice
-  double* l = allocateMatrix(n,n);
-  double* u = allocateMatrix(n,n);
-  int i = 0, j = 0, k = 0;
-
-  for (i = 0; i < n; i++)
-  {
-    for (j = 0; j < n; j++)
+    if ((A[i*n+i] == 0) & (i < n))
     {
-      if (j < i)
+      j = i + 1;
+
+      while ((A[j*n+i] == 0) & (j < n-1))
       {
-        l[j*n+i] = 0;
-      } else {
-        l[j*n+i] = A[j*n+i];
-        for (k = 0; k < i; k++)
-        {
-          l[j*n+i] = l[j*n+i] - (l[j*n+k] * u[k*n+i]);
-        }
+        j = j+1;
       }
     }
 
-    for (j = 0; j < n; j++) 
+    if ( (j == n-1) & (A[j*n+i] == 0))
     {
-      if (j < i) 
+      return false;
+    } else {
+      T[i] = A[i*n+i];
+      A[i*n+i] = A[j*n+i];
+      A[j*n+i] = T[i];
+    }
+
+    x = b[i];
+    b[i] = b[j];
+    b[j] = x;
+
+    for ( j = i+1 ; j < n; i++)
+    {
+      b[j] = b[j] - (A[j*n+i] / A[i*n+i]) * b[i];
+      A[j*n+i] = A[j*n+i] - (A[j*n+i] / A[i*n+i]) * A[i*n+i];
+    }
+  }
+
+  return A;
+
+  //To check if matrix is upper triangular or not
+  uint64_t flag = 0;
+  for (uint64_t i = 0; i < n; i++)
+  {
+    for (j = 0; j <= i; j++)
+    {
+      if (A[i*n+j] != 0)
       {
-        u[i*n+j] = 0;
-      }else if (j == i) 
-      {
-         u[i*n+j] = 1;
+        flag = 0;
       } else {
-         u[i*n+j] = A[i*n+j] / l[i*n+i];
-         for (k = 0; k < i; k++) 
-         {
-           u[i*n+j] = u[i*n+j] - ((l[i*n+k] * u[k*n+j]) / l[i*n+i]);
-         }
+        flag = 1;
       }
     }
 
   }
 
-  copyMatrix(A,u,n,n);
-
-  */
-//--------------------------------------------------------------------------------------
-  /* Ca je sais plus ce que c'est 
-  double* m = allocateMatrix(n,n);
-  for (int j = 0; j < n ; j++)
-  {
-    for (int i = j + 1; i < n-1; i++)
+     if (flag == 1)
     {
-      m[i*n+j] = A[i*n+j] / A[j*n+j];
-
-      for (int k = j+1; k < n-1; k++)
-      {
-        A[i*n+k] = A[i*n+k] - (m[i*n+j] * A[j*n+k] ) ;
-      }
-      b[i] = b[i] - (m[i*n+j] * b[j]);
+      return true;
+    } else {
+      return false;
     }
-  }
-  freeMatrix(m);
-  */
-//----------------------------------------------------------------------------------------
 }
 
 /*

@@ -5,13 +5,11 @@
       "name": "C/C++ Runner: Debug Session",
       "type": "cppdbg",
       "request": "launch",
-      "args": [
-        ""
-      ],
+      "args": [],
       "stopAtEntry": false,
-      "cwd": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/TP-Matrice/TP4",
+      "cwd": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/AlgoNum/TP-Matrice/TP4",
       "environment": [],
-      "program": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/TP-Matrice/TP4/build/Debug/outDebug",
+      "program": "/home/alisahasanli/Cours/L2/S2/Algo et Crea Num/AlgoNum/TP-Matrice/TP4/build/Debug/outDebug",
       "internalConsoleOptions": "openOnSessionStart",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",

@@ -13,7 +13,7 @@ LIBS = 				# par exemple, -lm rajoute le libm standard
 LIBSDIR = 
 
 # fichiers du projet
-SRC = fich1.c fich2.c
+SRC = main.cpp matrix.cpp
 OBJ = $(SRC:.c=.o)
 EXEC = run.out
 
@@ -22,7 +22,7 @@ EXEC = run.out
 all: $(EXEC)
 
 # dépendance des .h
-fich1.o: fich1.h
+fich1.o: matrix.hpp
 fich2.o: fich2.h fich1.h
 # règles de compilation
 %.o: %.c
